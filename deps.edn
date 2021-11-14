@@ -1,2 +1,6 @@
 {:paths ["src"]
- :deps {hangul-utils/hangul-utils {:mvn/version "0.1.0"}}}
+ :deps {hangul-utils/hangul-utils {:mvn/version "0.1.0"}}
+ :aliases
+ {:test {:extra-paths ["test"]
+         :extra-deps
+         {lambdaisland/kaocha {:mvn/version "1.60.945"}}}}}

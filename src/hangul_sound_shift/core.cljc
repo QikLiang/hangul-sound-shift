@@ -46,5 +46,3 @@
        tokenize
        (split-seq :break)
        han/construct-str))
-
-(print (convert "같이"))
