@@ -1,0 +1,2 @@
+{:paths ["src"]
+ :deps {hangul-utils/hangul-utils {:mvn/version "0.1.0"}}}
