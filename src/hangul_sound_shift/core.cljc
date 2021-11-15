@@ -59,6 +59,9 @@
    [[ssang-bad-first \ㅎ :break voiceless]
     (fn [[c1 _ b c3]]
       [(get t-badchims c1 c1) b (voiceless c3)])]
+   [[ssang-bad-first \ㅎ :break \ㅅ]
+    (fn [[c1 _ b]]
+      [(get t-badchims c1 c1) b \ㅆ])]
    [[ssang-bad-first ssang-bad-pre-tense :break plain-to-tense]
     (fn [[c1 _ b c3]]
       [(get t-badchims c1 c1) b (plain-to-tense c3)])]
@@ -75,7 +78,7 @@
    [[\ㅂ :break plain-to-tense]
     (fn [[_ b c]] [\ㅍ b (get plain-to-tense c c)])]
    [[\ㅂ :break (comp not #{\ㄹ\ㅇ\ㅁ\ㄴ\ㅎ})] [\ㅍ 1 2]]
-   [[t-badchims :break (comp not #{\ㅇ\ㄴ\ㅁ})]
+   [[t-badchims :break (comp not #{\ㅇ\ㄴ\ㅁ\ㅎ})]
     (fn [[_ b c]] [\ㅌ b (get plain-to-tense c c)])]
    ; re-syllabification
    [[resyllabic-badchims :break \ㅇ] [:break 0]]
@@ -90,6 +93,8 @@
    ; aspirated consonants
    [[voiceless :break \ㅎ] (fn [[c b]] [b (voiceless c)])]
    [[\ㅎ :break voiceless] (fn [[_ b c]] [b (voiceless c)])]
+   [[t-badchims :break \ㅎ] [:break \ㅌ]]
+   [[\ㅎ :break \ㅅ] [:break \ㅆ]]
    ; nasal sound shifts
    [[ssang-bad-first \ㄱ :break #{\ㅁ\ㄴ}] [\ㅇ :break 3]]
    [[ssang-bad-first \ㄱ :break \ㄹ] [\ㅇ :break \ㄴ]]

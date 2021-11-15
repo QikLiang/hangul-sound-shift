@@ -50,7 +50,9 @@
     (is (= (convert "좋다") "초타"))
     (is (= (convert "쌓자") "싸차"))
     (is (= (convert "학회") "하쾨"))
-    (is (= (convert "입학") "이팍")))
+    (is (= (convert "입학") "이팍"))
+    (is (= (convert "못하다") "모타다"))
+    (is (= (convert "좋습니다") "초씀니다")))
 
 (deftest nasalization
     (is (= (convert "읽는") "잉는"))
