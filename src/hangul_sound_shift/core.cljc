@@ -1,5 +1,4 @@
 (ns hangul-sound-shift.core
-  (:gen-class)
   (:require [hangul-utils.core :as han]
             [clojure.string :as str]))
 

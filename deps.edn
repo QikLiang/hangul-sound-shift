@@ -1,6 +1,12 @@
 {:paths ["src"]
- :deps {hangul-utils/hangul-utils {:mvn/version "0.1.0"}}
+ :deps {hangul-utils/hangul-utils {:mvn/version "0.1.0"}
+        org.clojure/clojurescript {:mvn/version "1.10.891"}}
  :aliases
  {:test {:extra-paths ["test"]
          :extra-deps
-         {lambdaisland/kaocha {:mvn/version "1.60.945"}}}}}
+         {lambdaisland/kaocha {:mvn/version "1.60.945"}}
+         :main-opts ["-m" "kaocha.runner" "--watch"]}
+  :js {:main-opts ["-m" "cljs.main"
+                   "--optimizations" "advanced"
+                   "-c" "hangul-sound-shift.webpage"]}}}
+; clj -M:test to run unit tests, -M:js to compile js
