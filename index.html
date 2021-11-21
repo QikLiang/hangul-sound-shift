@@ -12,6 +12,94 @@
     <label for="input">Output:</label>
     <br>
     <pre id="output"></pre>
+    <br>
+    <hr>
+    <h2>Sources:</h2>
+    <ul>
+        <li>
+            <a href="https://www.youtube.com/watch?v=4ItnWxGxFIw&list=PLXHm_NPaln268p_q0sK79FkkNQD69o2zQ&index=2">
+                KOREAN FULL COURSE Youtube video
+            </a>
+        </li>
+        <li>
+            KOREAN MADE SIMPLE textbook by Billy Go (
+            <a href="https://www.youtube.com/watch?v=VbOWbrPoW00">Youtube video of equivalent lesson</a>
+            )
+        </li>
+        <li>
+            SayJack.com:
+            <a href="https://www.sayjack.com/korean/learn-korean/tensing-and-pronunciations-of-korean-consonants/">Page 1</a>,
+            <a href="https://www.sayjack.com/korean/learn-korean/resyllabification-and-pronunciations-of-korean-consonants/">Page 2</a>
+        </li>
+        <li>
+            <a href="https://en.wikibooks.org/wiki/Korean/Essential_Pronunciation_Rules">Wikibooks</a>
+        </li>
+        <li>
+            <a href="http://organickorean.com/the-sound-change-rule-of-%E3%85%8E-h">ORGANIC KOREAN</a>
+        </li>
+    </ul>
+
+    <h2>Caveats</h2>
+    <ul>
+        <li>
+            <b>THIS IS NOT A DICTIONARY!</b>
+            There is
+            <a href="https://github.com/QikLiang/hangul-sound-shift/blob/master/src/hangul_sound_shift/core.cljc">
+                less than 200 lines of code
+            </a>
+            trying to apply the common patterns of the Korean language with (currently) no consideration for individual word exceptions.
+            Use this to remind yourself that a sound shift is likely to occur, but check a dictionary if you need a definitive answer.
+        </li>
+        <li>
+            As explained by Wikibooks, a "plain" consonant (ㄱ as example in the following) can have three pronunciations:
+            unvoiced (가다), voiced (시간), or unreleased stop (학생).
+            <a href="https://www.thoughtco.com/voiced-and-voiceless-consonants-1212092">
+                An explanation on voiced vs unvoiced consonants.
+            </a>
+            To a beginner of the language, a unvoiced consonant has more in common with their aspirated counterpart (ㅋ)
+            than the voiced counterpart of the same sound.
+            Although I've not seen it done anywhere else,
+            I've taken the liberty to represent the unvoiced consonants with their aspirated equivalent.
+            According to the KOREAN FULL COURSE video,
+            the unreleased stop is also supposed to be more alike to the unvoiced than the voiced,
+            but it's hard to hear the difference and I've decided to leave them as is to avoid further confusion.
+        </li>
+        <li>
+            Many patchim take on a "t" sound (e.g. 옷 is supposed to be pronounced 옫).
+            Conventionally, this "t" sound is represented by a ㄷ,
+            but I've decided to use a ㅌ instead because the aspirated feels more like a "t" as I explained above.
+        </li>
+        <li>
+            According to the KOREAN FULL COURSE video,
+            a ㄹ more like a "r" at the beginning of a syllable and more like a "l" in the end of a syllable.
+            Similarly, a ㅅ is more like a "sh" when paired with a ㅣ sound (시, 쉬, 샤, etc.) and more like a "s" otherwise.
+            These changes are not represented here due to the limitations of Hangul.
+        </li>
+        <li>
+            According to the KOREAN FULL COURSE video,
+            a ㅎ that follows a nasal consonant (ㅁ, ㄴ, ㅇ, ㄹ) is supposed to be soft but still pronounced.
+            I treat such ㅎ as completely silent to emphasize the consonant assimulation/resyllabification.
+            When the ㅎ is surrounded by vowels on both sides, the same softening also happens,
+            but I decided to leave them unchanged to show it's not completely silent.
+        </li>
+        <li>
+            With the limitations mentioned above, why use Hangul instead of some romanization?
+            Anyone learning Korean would know Hangul, and I felt it's not worth the time to learn any other romanization.
+        </li>
+    </ul>
+
+    <h2>Alternative</h2>
+    Only after I've finished making this did I discover
+    <a href="http://pronunciation.cs.pusan.ac.kr/pronunc.htm">
+        it has already been done
+    </a>
+    by the Pusan National University, which is likely more accurate.
+    However, their tool can only convert one word or sentence at the time, while this page takes anything you want to throw at it.
+    I thought this might still be useful if you want to, say, generate 5,000 flashcards at once.
+
+    <h2>Technology</h2>
+    This webpage was created using the ClojureScript programming language and open-sourced
+    <a href="https://github.com/QikLiang/hangul-sound-shift">here</a>.
 <script src="out/main.js" defer></script>
 </body>
 </html>
