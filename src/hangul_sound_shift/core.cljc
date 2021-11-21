@@ -106,64 +106,71 @@
    [[t-badchims :break #{\ㅁ\ㄴ}] [\ㄴ :break 2]]
    ])
 
-(defn form-result-fn [result]
-  (fn [input]
+(defn form-result [[_ result-pattern] input]
+  (if (vector? result-pattern)
     (mapv (fn [token]
             (if (integer? token)
               (nth input token)
               token))
-          result)))
-
-(def processed-rules
-  (map (fn [[pattern result]]
-         [(mapv #(if (or (char? %) (keyword? %)) (partial = %) %) pattern)
-          (if (vector? result) (form-result-fn result) result)])
-       sound-shift-rules))
+          result-pattern)
+    (result-pattern input)))
 
 ;; sequence manipulation helper functions
 
-(defn join-seqs [delim seqs]
-  (apply concat (interpose [delim] seqs)))
+(defn dbg [x] (println x) x)
 
-(defn split-seq [delim string]
-  (filter #(not= delim (first %)) (partition-by #{delim} string)))
+(defn join-seqs [delim]
+  (comp
+    (interpose [delim])
+    (mapcat identity)))
+
+(defn split-seq [delim text]
+  (->> text
+       (partition-by #(= delim %))
+       (filter #(not= delim (first %)))))
 
 
-(defn break-double-badchim [letters]
-  (mapcat #(get double-badchims % [%]) letters))
+(defn break-double-badchim []
+  (mapcat #(get double-badchims % [%])))
 
 ;; apply rules to text
 
-(defn match-rule? [text [pattern _]]
-  (and (<= (count pattern) (count text))
-       (every? identity (map #(%1 %2) pattern text))))
+(defn match-token? [pattern token]
+  (if (or (char? pattern) (keyword? pattern))
+    (= pattern token)
+    (pattern token)) )
 
-; like a compiler tokenizer, this function takes in unprocessed text
-; and returns [ token stiil-unprocessed-text ]
-(defn apply-rules [input]
-  (if (empty? input) :end
-    (if-let [matching-rule (->> processed-rules
-                                (filter #(match-rule? input %))
-                                first)]
-      [((second matching-rule) input)
-       (drop (count (first matching-rule)) input)]
-      [[(first input)] (drop 1 input)])))
+(defn match-rule? [text text-len [pattern _]]
+  (and (<= (count pattern) text-len)
+       (every? identity (map match-token? pattern text))))
 
-(defn dbg [x] (println x) x)
+(defn match-rules [input input-len]
+  (->> sound-shift-rules
+       (filter #(match-rule? input input-len %))
+       first))
 
 (defn tokenize [text]
-  (->> [[] text]
-       (iterate (comp apply-rules second))
-       (take-while #(not= :end %))
-       ;(map dbg)
-       (mapcat first)))
+  (loop [results (transient [])
+         text-remain text
+         text-len (count text)]
+    (if-let [matching-rule (match-rules text-remain text-len)]
+      (recur (reduce conj! results (form-result matching-rule text-remain))
+             (drop (count (first matching-rule)) text-remain)
+             (- text-len (count (first matching-rule))))
+      (if (zero? text-len)
+        (split-seq :break (persistent! results))
+        (recur (conj! results (first text-remain))
+               (drop 1 text-remain)
+               (- text-len 1))))))
 
 (defn convert [written-hangul]
-  (->> (str " " written-hangul " ")
-       han/deconstruct-str
-       (map break-double-badchim)
-       (join-seqs :break)
-       tokenize
-       (split-seq :break)
-       han/construct-str
-       str/trim))
+  (let [code-points (han/deconstruct-str
+                      (str " " written-hangul " "))
+        jamo (into [] (comp
+                        (join-seqs :break)
+                        (break-double-badchim))
+                   code-points)
+        converted-jamo (tokenize jamo)]
+    (->> converted-jamo
+         han/construct-str
+         str/trim)))
