@@ -26,7 +26,8 @@
     (is (= (convert "음악") "으막"))
     (is (= (convert "있어요") "이써요"))
     (is (= (convert "좋아요") "초하요"))
-    (is (= (convert "일하다") "이라다")))
+    (is (= (convert "일하다") "이라다"))
+    (is (= (convert "월요일") "워료일")))
 
 (deftest double-badchim
     (is (= (convert "앉다") "안따"))

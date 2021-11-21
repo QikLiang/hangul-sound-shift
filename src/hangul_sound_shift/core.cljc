@@ -2,7 +2,7 @@
   (:require [hangul-utils.core :as han]
             [clojure.string :as str]))
 
-(def resyllabic-badchims #{\ㅅ\ㅆ\ㅈ\ㅉ\ㅊ\ㄷ\ㄱ\ㄲ\ㅋ\ㅁ\ㄴ\ㅎ})
+(def consonants #{\ㅅ\ㅆ\ㅈ\ㅉ\ㅊ\ㄷ\ㄱ\ㄲ\ㅋ\ㅁ\ㄴ\ㄹ\ㅎ})
 (def tensing-prefix ; consonants that cause next consonant to tense
   #{\ㅈ\ㄷ\ㄱ\ㅅ\ㅃ\ㅉ\ㄸ\ㄲ\ㅆ\ㅋ\ㅌ\ㅊ\ㅍ})
 (def t-badchims #{\ㅅ\ㅆ\ㅈ\ㅊ\ㄷ\ㅌ})
@@ -53,7 +53,7 @@
    [[ssang-bad-first ssang-bad-second :break \ㅇ]
     (fn [[c1 c2 b]] [(get t-badchims c1 c1) b c2])]
    [[\ㄹ \ㅁ :break #(not= \ㅇ %)] [\ㅁ :break 3]]
-   [[\ㄹ \ㅍ :break #(not= \ㅇ %)] [\ㅂ :break 3]]
+   [[\ㄹ \ㅍ :break #(not= \ㅇ %)] [\ㅍ :break 3]]
    [[\ㅂ ssang-bad-second :break #{\ㅁ\ㄴ}] [\ㅁ :break 3]]
    [[ssang-bad-first \ㅎ :break voiceless]
     (fn [[c1 _ b c3]]
@@ -80,7 +80,7 @@
    [[t-badchims :break (comp not #{\ㅇ\ㄴ\ㅁ\ㅎ})]
     (fn [[_ b c]] [\ㅌ b (get plain-to-tense c c)])]
    ; re-syllabification
-   [[resyllabic-badchims :break \ㅇ] [:break 0]]
+   [[consonants :break \ㅇ] [:break 0]]
    [[#{\ㅁ\ㄴ\ㄹ} :break \ㅎ] [:break 0]]
    ; begining of word devoicing
    [[\space :break voiceless]
