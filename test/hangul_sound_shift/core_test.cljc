@@ -1,6 +1,6 @@
 (ns hangul-sound-shift.core-test
     (:require [hangul-sound-shift.core :refer [convert]]
-              [clojure.test :refer :all]))
+              [clojure.test :refer [deftest is]]))
 
 (deftest soft-consonate-strengthening
     (is (= (convert "두다") "투다"))
