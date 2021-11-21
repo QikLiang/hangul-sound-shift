@@ -1,0 +1,1 @@
+{:optimizations :advanced, :main hangul-sound-shift.webpage, :output-to "out/main.js", :output-dir "out", :aot-cache true}

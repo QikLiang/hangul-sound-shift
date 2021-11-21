@@ -3,6 +3,7 @@
 
 (defn input-box [] (.getElementById js/document "input"))
 (defn update-page []
+  (println (convert (.-value (input-box))))
   (set! (.-textContent (.getElementById js/document "output"))
         (convert (.-value (input-box)))))
 
@@ -10,7 +11,7 @@
 (defn refresh []
   (when timer (js/clearTimeout timer))
   (let [input-length (.. (input-box) -value -length)
-        update-time (min (* input-length 10) 1000)]
+        update-time (min input-length 1000)]
     (set! timer (js/setTimeout update-page update-time))))
 
 (defn setup []
